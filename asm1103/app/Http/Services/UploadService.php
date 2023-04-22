@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Services;
+
+class UploadService
+{
+    public function store($request)
+    {
+        if ($request->hasFile('file')) {
+
+            try{
+                $name = $request->file('file')->getClientOrigianalName();
+
+                $pathFull = 'uploads/' . date("Y/m/d");
+
+                $path = $request->file('file')->storeAs('public/' . $pathFull, $name);
+
+                return $pathFull . '/' . $name;
+
+            } catch (\Exception $error) {
+                return false;
+            }
+        }
+    }
+}
