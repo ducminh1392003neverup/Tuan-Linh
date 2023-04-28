@@ -23,9 +23,11 @@ Route::prefix('admin')->group(function(){
     Route::prefix('products')->group(function(){
         Route::get('add', [ProductController::class, 'create']);
         Route::post('add', [ProductController::class, 'store']);
-        Route::get('list', [ProductController::class, 'index']);
+        Route::get('list', [ProductController::class, 'index'])->name("t");
+        Route::get('edit/{id}', [ProductController::class, 'show'])->name("product.edit");
+        Route::post('edit/{product}', [ProductController::class, 'update']);
+        Route::get('destroy/{product}', [ProductController::class, 'destroy'])->name("product.delete");
     });
-
     Route::post('upload/services', [UploadController::class, 'store']);
 
 });
