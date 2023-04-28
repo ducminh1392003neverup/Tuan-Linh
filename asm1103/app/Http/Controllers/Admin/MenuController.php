@@ -60,9 +60,9 @@ class MenuController extends Controller
     public function destroy(Menu $Menu)
     {
         if($Menu->delete())
-            Session::flash('message', 'Delete category successfull');
-        else
-            Session::flash('message', 'Failed');
+        //     Session::flash('message', 'Delete category successfull');
+        // else
+        //     Session::flash('message', 'Failed');
         return redirect('admin/menus/list');
     }    
 }
