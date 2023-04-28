@@ -38,7 +38,7 @@
                     @endforeach
                 @endif
 
-            {{-- </ul>
+            </ul>
 
             <div class="w-full">
                 <div class="header-cart-total w-full p-tb-40">
@@ -57,4 +57,4 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
