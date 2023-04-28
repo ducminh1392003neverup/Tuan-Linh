@@ -7,6 +7,8 @@ use App\Http\Requests\Product\ProductRequest;
 use App\Http\Services\Product\ProductAdminService;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Termwind\Components\Dd;
 
 class ProductController extends Controller
 {
@@ -21,7 +23,7 @@ class ProductController extends Controller
     {
         return view('admin.product.list', [
             'title' => 'List Products',
-            'products' => $this->productService->getMenu()
+            'products' => $this->productService->get()
         ]);
     }
 
@@ -41,11 +43,11 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
         return view('admin.product.edit', [
-            'title' => 'Update Product',
-            'product' => $product,
+            'title' => 'Edit Product',
+            'product' => Product::find($id),
             'menus' => $this->productService->getMenu()
         ]);
     }
@@ -61,17 +63,11 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-
-    public function destroy(Request $request)
+ 
+    public function destroy(Product $product )
     {
-        $result = $this->productService->delete($request);
-        if ($result) {
-            return response()->json([
-                'error' => false,
-                'message' => 'Delete product successfull'
-            ]);
-        }
-
-        return response()->json([ 'error' => true ]);
-    }
+        if($product->delete())
+        
+        return redirect('admin/products/list');
+}    
 }
