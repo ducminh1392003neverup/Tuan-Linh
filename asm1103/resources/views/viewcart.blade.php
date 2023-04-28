@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="header-cart-content flex-w js-pscroll">
+        <div class="header-rt-content flex-w js-pscroll">
             @php $sumPriceCart = 0; @endphp
             <ul class="header-cart-wrapitem w-full">
                 @if (count($products) > 0)
