@@ -10,18 +10,20 @@ use Illuminate\Support\Facades\Session;
 
 class ProductAdminService
 {
-
+    public function getMenu(){
+        return Menu::where('parent_id', 0)->get();
+    }
     protected function isValidPrice($request)
     {
         if ($request->input('price') != 0 && $request->input('price_sale') != 0
             && $request->input('price_sale') >= $request->input('price')
         ) {
-            Session::flash('error', 'Giá giảm phải nhỏ hơn giá gốc');
+            Session::flash('error', 'The reduced price must be less than the original price');
             return false;
         }
 
         if ($request->input('price_sale') != 0 && (int)$request->input('price') == 0) {
-            Session::flash('error', 'Vui lòng nhập giá gốc');
+            Session::flash('error', 'You must input cost');
             return false;
         }
 
@@ -37,16 +39,16 @@ class ProductAdminService
             $request->except('_token');
             Product::create($request->all());
 
-            Session::flash('success', 'Thêm Sản phẩm thành công');
+            Session::flash('success', 'Add product successfull');
         } catch (\Exception $err) {
-            Session::flash('error', 'Thêm Sản phẩm lỗi');
+            Session::flash('error', 'Add product failed');
             return  false;
         }
 
         return  true;
     }
 
-    public function getMenu()
+    public function get()
     {
         return Product::with('menu')
             ->orderByDesc('id')->paginate(15);
@@ -60,17 +62,17 @@ class ProductAdminService
         try {
             $product->fill($request->input());
             $product->save();
-            Session::flash('success', 'Cập nhật thành công');
+            Session::flash('success', 'Update success');
         } catch (\Exception $err) {
-            Session::flash('error', 'Có lỗi vui lòng thử lại');
+            Session::flash('error', 'Failed');
             return false;
         }
         return true;
     }
 
-    public function delete($request)
+    public function delete($id)
     {
-        $product = Product::where('id', $request->input('id'))->first();
+        $product = Product::find($id);
         if ($product) {
             $product->delete();
             return true;
