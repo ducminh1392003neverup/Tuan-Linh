@@ -14,8 +14,6 @@ class CartService
 {
     public function create($request)
     {
-        $qty = (int)$request->input('num_product');
-        $product_id = (int)$request->input('product_id');
 
         if ($qty <= 0 || $product_id <= 0) {
             Session::flash('error', 'Incorrect Quantity or Product');
