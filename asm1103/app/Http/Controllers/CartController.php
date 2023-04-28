@@ -31,7 +31,11 @@ class CartController extends Controller
         $products = $this->cartService->getProduct();
 
         return view('carts.list', [
-            'title' => 
+            'title' => 'Cart',
+            'products' => $products,
+            'carts' => Session::get('carts')
+        ]);
+    }
 
     public function update(Request $request)
     {
